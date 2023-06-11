@@ -4,6 +4,7 @@ const builds = require('./build');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
+const admin = require('firebase-admin');
 
 //Konfigurasi Database Postgresql
 const pool = new Pool({
@@ -13,6 +14,53 @@ const pool = new Pool({
     password: 'reza123!',
     port: 5432,
 });
+
+// Sign In Firebase
+const serviceAccount = require('../serviceAccountKey.json');
+admin.initializeApp({
+credential: admin.credential.cert(serviceAccount),
+});
+
+const signInHandler = async (request, h) => {
+    const { idToken } = request.payload;
+
+try {
+    // Verifikasi token akses menggunakan Firebase Admin SDK
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { email, name, picture } = decodedToken;
+
+    // Lakukan operasi yang diperlukan dengan informasi pengguna yang berhasil sign-in
+    // Contoh: menyimpan pengguna ke basis data, menghasilkan token JWT, dll.
+
+    return h.response({ message: 'Sign-in successful', user: { email, name, picture } }).code(200);
+} catch (error) {
+    console.error('Error during sign-in:', error);
+    return h.response({ message: 'Sign-in error' }).code(500);
+}
+};
+
+// Fungsi untuk menghasilkan token akses menggunakan Firebase Admin SDK
+const generateFirebaseAccessToken = async () => {
+    try {
+      // Dapatkan token akses dari Firebase Admin SDK
+      const token = await admin.app().auth().createCustomToken('user-uid');
+  
+      return token;
+    } catch (error) {
+      console.error('Error generating Firebase access token:', error);
+      throw error;
+    }
+  };
+  
+  // Contoh penggunaan untuk menghasilkan token akses
+  generateFirebaseAccessToken()
+    .then((token) => {
+      console.log('Firebase access token:', token);
+      // Gunakan token akses dalam request Postman
+    })
+    .catch((error) => {
+      console.error('Error generating Firebase access token:', error);
+    });
 
 // POST Register Users
 const postRegisterUsersHandler = async (request, h) => {
@@ -255,6 +303,7 @@ const { id } = request.params;
 
 module.exports = {
 
+    signInHandler,
     postRegisterUsersHandler,
     postLoginUsersHandler,
     postLogoutUsersHandler,

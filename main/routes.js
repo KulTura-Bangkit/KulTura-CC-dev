@@ -1,9 +1,10 @@
 const Joi = require('joi');
 const {
+    signInHandler,
     postRegisterUsersHandler,
     postLoginUsersHandler,
     postLogoutUsersHandler,
-    
+
     getFoodMethodHandler,
     getFoodsDetailMethodHandler,
     getBatikMethodHandler,
@@ -15,6 +16,11 @@ const {
 } = require('./handler');
 
 const routes = [
+    {
+        method: 'POST',
+        path: '/signin',
+        handler: signInHandler,
+    },
     {
         method: 'POST',
         path: '/register',
