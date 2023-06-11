@@ -1,9 +1,9 @@
 const Joi = require('joi');
 const {
-    // postMethodHandler,
     postRegisterUsersHandler,
     postLoginUsersHandler,
     postLogoutUsersHandler,
+    
     getFoodMethodHandler,
     getFoodsDetailMethodHandler,
     getBatikMethodHandler,
@@ -11,8 +11,6 @@ const {
     getBuildMethodHandler,
     getBuildsDetailMethodHandler,
     
-    // putMethodHandler,
-    // deleteMethodHandler,
     
 } = require('./handler');
 

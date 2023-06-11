@@ -16,10 +16,10 @@ const pool = new Pool({
 
 // POST Register Users
 const postRegisterUsersHandler = async (request, h) => {
-    const { email, username, password, nim } = request.payload;
+    const { email, username, password, nik } = request.payload;
 
   // Cek apakah pengguna sudah terdaftar
-  const query = 'SELECT * FROM users WHERE username = $1 OR email = $2 OR nim = $3';
+  const query = 'SELECT * FROM users WHERE username = $1 OR email = $2 OR nik = $3';
     const result = await pool.query(query, [username, email, nim]);
     if (result.rows.length > 0) {
     return h.response('User already exists').code(400);
@@ -29,8 +29,8 @@ const postRegisterUsersHandler = async (request, h) => {
 const hashedPassword = await bcrypt.hash(password, 10);
 
   // Simpan pengguna ke database
-const insertQuery = 'INSERT INTO users (email, username, password, nim) VALUES ($1, $2, $3, $4)';
-await pool.query(insertQuery, [email, username, hashedPassword, nim]);
+const insertQuery = 'INSERT INTO users (email, username, password, nik) VALUES ($1, $2, $3, $4)';
+await pool.query(insertQuery, [email, username, hashedPassword, nik]);
 
 return h.response('User registered successfully').code(201);
 };
