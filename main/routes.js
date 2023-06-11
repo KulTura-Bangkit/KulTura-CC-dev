@@ -32,7 +32,7 @@ const routes = [
                 email: Joi.string().email().required(),
                 username: Joi.string().required(),
                 password: Joi.string().required(),
-                nim: Joi.string().required(),
+                nik: Joi.string().required(),
             }),
             },
         },

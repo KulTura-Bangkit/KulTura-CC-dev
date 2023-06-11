@@ -5,14 +5,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 const admin = require('firebase-admin');
+require('dotenv').config();
 
 //Konfigurasi Database Postgresql
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'kultura1',
-    password: 'reza123!',
-    port: 5432,
+    user: process.env.USER || 'postgres',
+    host: process.env.HOST || 'localhost',
+    database: process.env.DATABASE || 'kultura1',
+    password: process.env.PASSWORD || 'reza123!',
+    port: process.env.PORT_DB || '5432',
 });
 
 // Sign In Firebase
@@ -39,28 +40,28 @@ try {
 }
 };
 
-// Fungsi untuk menghasilkan token akses menggunakan Firebase Admin SDK
-const generateFirebaseAccessToken = async () => {
-    try {
-      // Dapatkan token akses dari Firebase Admin SDK
-      const token = await admin.app().auth().createCustomToken('user-uid');
+// // Fungsi untuk menghasilkan token akses menggunakan Firebase Admin SDK
+// const generateFirebaseAccessToken = async () => {
+//     try {
+//       // Dapatkan token akses dari Firebase Admin SDK
+//       const token = await admin.app().auth().createCustomToken('user-uid');
   
-      return token;
-    } catch (error) {
-      console.error('Error generating Firebase access token:', error);
-      throw error;
-    }
-  };
+//       return token;
+//     } catch (error) {
+//       console.error('Error generating Firebase access token:', error);
+//       throw error;
+//     }
+//   };
   
-  // Contoh penggunaan untuk menghasilkan token akses
-  generateFirebaseAccessToken()
-    .then((token) => {
-      console.log('Firebase access token:', token);
-      // Gunakan token akses dalam request Postman
-    })
-    .catch((error) => {
-      console.error('Error generating Firebase access token:', error);
-    });
+//   // Contoh penggunaan untuk menghasilkan token akses
+//   generateFirebaseAccessToken()
+//     .then((token) => {
+//       console.log('Firebase access token:', token);
+//       // Gunakan token akses dalam request Postman
+//     })
+//     .catch((error) => {
+//       console.error('Error generating Firebase access token:', error);
+//     });
 
 // POST Register Users
 const postRegisterUsersHandler = async (request, h) => {
@@ -68,7 +69,7 @@ const postRegisterUsersHandler = async (request, h) => {
 
   // Cek apakah pengguna sudah terdaftar
   const query = 'SELECT * FROM users WHERE username = $1 OR email = $2 OR nik = $3';
-    const result = await pool.query(query, [username, email, nim]);
+    const result = await pool.query(query, [username, email, nik]);
     if (result.rows.length > 0) {
     return h.response('User already exists').code(400);
 }
