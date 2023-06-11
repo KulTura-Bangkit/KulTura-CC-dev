@@ -1,6 +1,64 @@
 const foods = require('./food');
 const batiks = require('./batik');
 const builds = require('./build');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { Pool } = require('pg');
+
+//Konfigurasi Database Postgresql
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'kultura1',
+    password: 'reza123!',
+    port: 5432,
+});
+
+// POST Register Users
+const postRegisterUsersHandler = async (request, h) => {
+    const { email, username, password, nim } = request.payload;
+
+  // Cek apakah pengguna sudah terdaftar
+  const query = 'SELECT * FROM users WHERE username = $1 OR email = $2 OR nim = $3';
+    const result = await pool.query(query, [username, email, nim]);
+    if (result.rows.length > 0) {
+    return h.response('User already exists').code(400);
+}
+
+  // Hash password
+const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Simpan pengguna ke database
+const insertQuery = 'INSERT INTO users (email, username, password, nim) VALUES ($1, $2, $3, $4)';
+await pool.query(insertQuery, [email, username, hashedPassword, nim]);
+
+return h.response('User registered successfully').code(201);
+};
+
+// POST Login Users
+const postLoginUsersHandler = async (request, h) => {
+    const { username, password } = request.payload;
+
+  // Cek apakah pengguna terdaftar
+  const query = 'SELECT * FROM users WHERE username = $1';
+    const result = await pool.query(query, [username]);
+    const user = result.rows[0];
+
+    if (!user) {
+    return h.response('Invalid username or password').code(401);
+}
+
+  // Verifikasi password
+const isValidPassword = await bcrypt.compare(password, user.password);
+if (!isValidPassword) {
+    return h.response('Invalid username or password').code(401);
+}
+
+  // Buat token JWT
+const token = jwt.sign({ username: user.username }, 'secretkey', { expiresIn: '1h' });
+
+return { token };
+};
 
 // GET ALL food
 const getFoodMethodHandler = (request, h) => {
@@ -185,6 +243,9 @@ const { id } = request.params;
 
 module.exports = {
     // postMethodHandler,
+
+    postRegisterUsersHandler,
+    postLoginUsersHandler,
 
     getFoodMethodHandler,
     getFoodsDetailMethodHandler,

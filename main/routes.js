@@ -1,6 +1,7 @@
 const {
     // postMethodHandler,
-
+    postRegisterUsersHandler,
+    postLoginUsersHandler,
     getFoodMethodHandler,
     getFoodsDetailMethodHandler,
     getBatikMethodHandler,
@@ -20,6 +21,19 @@ const routes = [
     //   config: { auth: 'jwt' },
     //   handler: postMethodHandler,
     // },
+    {
+        method: 'POST',
+        path: '/register',
+        // config: { auth: 'jwt' },
+        handler: postRegisterUsersHandler,
+    },
+    {
+        method: 'POST',
+        path: '/login',
+        // config: { auth: 'jwt' },
+        handler: postLoginUsersHandler,
+    },
+
     {
         method: 'GET',
         path: '/foods',

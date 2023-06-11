@@ -11,7 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
+    "bcryptjs": "^2.4.3",
     "hapi": "^18.1.0",
-    "nodemon": "^2.0.22"
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.0",
+    "nodemon": "^2.0.22",
+    "pg": "^8.11.0"
   }
 }
