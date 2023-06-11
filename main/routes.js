@@ -1,7 +1,9 @@
+const Joi = require('joi');
 const {
     // postMethodHandler,
     postRegisterUsersHandler,
     postLoginUsersHandler,
+    postLogoutUsersHandler,
     getFoodMethodHandler,
     getFoodsDetailMethodHandler,
     getBatikMethodHandler,
@@ -15,25 +17,41 @@ const {
 } = require('./handler');
 
 const routes = [
-    // {
-    //   method: 'POST',
-    //   path: '/foods',
-    //   config: { auth: 'jwt' },
-    //   handler: postMethodHandler,
-    // },
     {
         method: 'POST',
         path: '/register',
         // config: { auth: 'jwt' },
         handler: postRegisterUsersHandler,
+        options: {
+            validate: {
+                payload: Joi.object({
+                email: Joi.string().email().required(),
+                username: Joi.string().required(),
+                password: Joi.string().required(),
+                nim: Joi.string().required(),
+            }),
+            },
+        },
     },
     {
         method: 'POST',
         path: '/login',
         // config: { auth: 'jwt' },
         handler: postLoginUsersHandler,
+        options: {
+            validate: {
+                payload: Joi.object({
+                username: Joi.string().required(),
+                password: Joi.string().required(),
+            }),
+            },
+        },
     },
-
+    {
+        method: 'POST',
+        path: '/logout',
+        handler: postLogoutUsersHandler,
+    },
     {
         method: 'GET',
         path: '/foods',
@@ -72,18 +90,6 @@ const routes = [
         // config: { auth: 'jwt' },
         handler: getBuildsDetailMethodHandler,
     },
-    // {
-    //   method: 'PUT',
-    //   path: '/foods/{id}',
-    //   config: { auth: 'jwt' },
-    //   handler: putMethodHandler,
-    // },
-    // {
-    //   method: 'DELETE',
-    //   path: '/foods/{id}',
-    //   config: { auth: 'jwt' },
-    //   handler: deleteMethodHandler,
-    // },
 ];
 
 module.exports = routes;

@@ -60,6 +60,18 @@ const token = jwt.sign({ username: user.username }, 'secretkey', { expiresIn: '1
 return { token };
 };
 
+// POST Logout Users
+const postLogoutUsersHandler = (request, h) => {
+    // Anda dapat mengatur opsi konfigurasi untuk menghapus token dari sisi klien,
+    // misalnya, dengan mengatur cookie atau menghapus token dari local storage.
+    // Pada contoh ini, kita menganggap token disimpan dalam Authorization header.
+
+    // Menghapus header Authorization
+    const response = h.response('Logout successful');
+    response.header('Authorization', '');
+    return response;
+};
+
 // GET ALL food
 const getFoodMethodHandler = (request, h) => {
     const foodTemp = Array.isArray(foods) ? foods : []; // Ensure foodTemp is an array
@@ -242,10 +254,10 @@ const { id } = request.params;
 };
 
 module.exports = {
-    // postMethodHandler,
 
     postRegisterUsersHandler,
     postLoginUsersHandler,
+    postLogoutUsersHandler,
 
     getFoodMethodHandler,
     getFoodsDetailMethodHandler,
@@ -253,7 +265,4 @@ module.exports = {
     getBatiksDetailMethodHandler,
     getBuildMethodHandler,
     getBuildsDetailMethodHandler,
-    
-    // putMethodHandler,
-    // deleteMethodHandler,
 };
