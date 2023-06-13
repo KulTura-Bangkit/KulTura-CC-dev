@@ -6,11 +6,15 @@ const {
     postLogoutUsersHandler,
 
     getFoodMethodHandler,
+    get5FoodMethodHandler,
     getFoodsDetailMethodHandler,
     getBatikMethodHandler,
+    get5BatikMethodHandler,
     getBatiksDetailMethodHandler,
+    get5BuildMethodHandler,
     getBuildMethodHandler,
     getBuildsDetailMethodHandler,
+    getSearchAllData,
     
     
 } = require('./handler');
@@ -64,7 +68,13 @@ const routes = [
     },
     {
         method: 'GET',
-        path: '/foods/{id}',
+        path: '/foods/first',
+        // config: { auth: 'jwt' },
+        handler: get5FoodMethodHandler,
+    },
+    {
+        method: 'GET',
+        path: '/foods/{name}',
         // config: { auth: 'jwt' },
         handler: getFoodsDetailMethodHandler,
     },
@@ -77,7 +87,13 @@ const routes = [
     },
     {
         method: 'GET',
-        path: '/batiks/{id}',
+        path: '/batiks/first',
+        // config: { auth: 'jwt' },
+        handler: get5BatikMethodHandler,
+    },
+    {
+        method: 'GET',
+        path: '/batiks/{name}',
         // config: { auth: 'jwt' },
         handler: getBatiksDetailMethodHandler,
     },
@@ -90,10 +106,23 @@ const routes = [
     },
     {
         method: 'GET',
-        path: '/builds/{id}',
+        path: '/builds/first',
+        // config: { auth: 'jwt' },
+        handler: get5BuildMethodHandler,
+    },
+    {
+        method: 'GET',
+        path: '/builds/{name}',
         // config: { auth: 'jwt' },
         handler: getBuildsDetailMethodHandler,
     },
+    {
+        method: 'GET',
+        path: '/all/{name}',
+        // config: { auth: 'jwt' },
+        handler: getSearchAllData,
+    },
+
 ];
 
 module.exports = routes;

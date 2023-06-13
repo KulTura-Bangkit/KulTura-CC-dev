@@ -138,6 +138,8 @@ const getFoodMethodHandler = (request, h) => {
             id: food.id,
             name: food.name,
             description: food.description,
+            url_image: food.url_image,
+            url_product: food.url_product,
         })),
         },
     });
@@ -153,6 +155,8 @@ const getFoodMethodHandler = (request, h) => {
             id: food.id,
             name: food.name,
             description: food.description,
+            url_image: food.url_image,
+            url_product: food.url_product,
         })),
     },
     });
@@ -163,9 +167,9 @@ const getFoodMethodHandler = (request, h) => {
 
   // GET DETAIL food
 const getFoodsDetailMethodHandler = (request, h) => {
-const { id } = request.params;
+const { name } = request.params;
 
-    const food = foods.filter((foodTemp) => foodTemp.id === id)[0];
+    const food = foods.filter((foodTemp) => foodTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
     if (food !== undefined) {
         return {
         status: 'success',
@@ -179,6 +183,50 @@ const { id } = request.params;
         message: 'data tidak ditemukan',
     });
     response.code(404);
+    return response;
+};
+
+// GET 5 Data Pertama Food
+const get5FoodMethodHandler = (request, h) => {
+    const foodTemp = Array.isArray(foods) ? foods : []; // Ensure foodTemp is an array
+    const { name } = request.query;
+
+    if (name !== undefined) {
+        const food = foodTemp.filter((food) =>
+            food.name.toLowerCase().includes(name.toLowerCase())
+        );
+
+        const response = h.response({
+            status: 'success',
+            data: {
+                foods: food.map((food) => ({
+                    id: food.id,
+                    name: food.name,
+                    description: food.description,
+                    url_image: food.url_image,
+                    url_product: food.url_product,
+                })),
+            },
+        });
+
+        response.code(200);
+        return response;
+    }
+
+    const response = h.response({
+        status: 'success',
+        data: {
+            foods: foodTemp.slice(0, 5).map((food) => ({
+                id: food.id,
+                name: food.name,
+                description: food.description,
+                url_image: food.url_image,
+                url_product: food.url_product,
+            })),
+        },
+    });
+
+    response.code(200);
     return response;
 };
 
@@ -199,6 +247,8 @@ const getBatikMethodHandler = (request, h) => {
             id: batik.id,
             name: batik.name,
             description: batik.description,
+            url_image: batik.url_image,
+            url_product: batik.url_product,
             })),
         },
     });
@@ -214,18 +264,63 @@ const getBatikMethodHandler = (request, h) => {
             id: batik.id,
             name: batik.name,
             description: batik.description,
+            url_image: batik.url_image,
+            url_product: batik.url_product,
         })),
     },
     });
     response.code(200);
     return response;
 };
+// GET 5 Data Pertama Food
+const get5BatikMethodHandler = (request, h) => {
+    const batikTemp = Array.isArray(batiks) ? batiks : []; // Ensure foodTemp is an array
+    const { name } = request.query;
+
+    if (name !== undefined) {
+        const batik = batikTemp.filter((batik) =>
+            batik.name.toLowerCase().includes(name.toLowerCase())
+        );
+
+        const response = h.response({
+            status: 'success',
+            data: {
+                batiks: batik.map((batik) => ({
+                    id: batik.id,
+                    name: batik.name,
+                    description: batik.description,
+                    url_image: batik.url_image,
+                    url_product: batik.url_product,
+                })),
+            },
+        });
+
+        response.code(200);
+        return response;
+    }
+
+    const response = h.response({
+        status: 'success',
+        data: {
+            batiks: batikTemp.slice(0, 5).map((batik) => ({
+                id: batik.id,
+                name: batik.name,
+                description: batik.description,
+                url_image: batik.url_image,
+                url_product: batik.url_product,
+            })),
+        },
+    });
+
+    response.code(200);
+    return response;
+};
 
   // GET DETAIL batik
 const getBatiksDetailMethodHandler = (request, h) => {
-const { id } = request.params;
+const { name } = request.params;
 
-    const batik = batiks.filter((batikTemp) => batikTemp.id === id)[0];
+    const batik = batiks.filter((batikTemp) => batikTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
     if (batik !== undefined) {
         return {
         status: 'success',
@@ -259,6 +354,8 @@ const getBuildMethodHandler = (request, h) => {
             id: build.id,
             name: build.name,
             description: build.description,
+            url_image: build.url_image,
+            url_product: build.url_product,
             })),
         },
     });
@@ -274,18 +371,63 @@ const getBuildMethodHandler = (request, h) => {
             id: build.id,
             name: build.name,
             description: build.description,
+            url_image: build.url_image,
+            url_product: build.url_product,
         })),
     },
     });
     response.code(200);
     return response;
 };
+// GET 5 Data Pertama Food
+const get5BuildMethodHandler = (request, h) => {
+    const buildTemp = Array.isArray(builds) ? builds : []; // Ensure foodTemp is an array
+    const { name } = request.query;
+
+    if (name !== undefined) {
+        const build = buildTemp.filter((build) =>
+            build.name.toLowerCase().includes(name.toLowerCase())
+        );
+
+        const response = h.response({
+            status: 'success',
+            data: {
+                builds: build.map((build) => ({
+                    id: build.id,
+                    name: build.name,
+                    description: build.description,
+                    url_image: build.url_image,
+                    url_product: build.url_product,
+                })),
+            },
+        });
+
+        response.code(200);
+        return response;
+    }
+
+    const response = h.response({
+        status: 'success',
+        data: {
+            builds: buildTemp.slice(0, 5).map((build) => ({
+                id: build.id,
+                name: build.name,
+                description: build.description,
+                url_image: build.url_image,
+                url_product: build.url_product,
+            })),
+        },
+    });
+
+    response.code(200);
+    return response;
+};
 
   // GET DETAIL build
 const getBuildsDetailMethodHandler = (request, h) => {
-const { id } = request.params;
+const { name } = request.params;
 
-    const build = builds.filter((buildTemp) => buildTemp.id === id)[0];
+    const build = builds.filter((buildTemp) => buildTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
     if (build !== undefined) {
         return {
         status: 'success',
@@ -302,6 +444,42 @@ const { id } = request.params;
     return response;
 };
 
+//GET Search All Data
+const getSearchAllData =(request, h) => {
+    const { name } = request.params;
+
+    const food = foods.filter((foodTemp) => foodTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
+    const batik = batiks.filter((batikTemp) => batikTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
+    const build = builds.filter((buildTemp) => buildTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
+    const hasil = []
+
+    if (food) {
+        hasil.push(food);
+    }
+    if (batik) {
+        hasil.push(batik);
+    }
+    if (build) {
+        hasil.push(build);
+    }
+
+    if (hasil.length > 0) {
+        return {
+            status: 'success',
+            data: {
+            hasil,
+        },
+        };
+    }
+    
+    const response = h.response({
+        status: 'fail',
+        message: 'data tidak ditemukan',
+    });
+    response.code(404);
+    return response;
+};
+
 module.exports = {
 
     signInHandler,
@@ -310,9 +488,14 @@ module.exports = {
     postLogoutUsersHandler,
 
     getFoodMethodHandler,
+    get5FoodMethodHandler,
     getFoodsDetailMethodHandler,
     getBatikMethodHandler,
+    get5BatikMethodHandler,
     getBatiksDetailMethodHandler,
     getBuildMethodHandler,
+    get5BuildMethodHandler,
     getBuildsDetailMethodHandler,
+
+    getSearchAllData,
 };
