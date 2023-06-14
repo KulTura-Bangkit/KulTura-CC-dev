@@ -191,29 +191,29 @@ const get5FoodMethodHandler = (request, h) => {
             food.name.toLowerCase().includes(name.toLowerCase())
         );
 
-        const response = h.response({
-                foods: food.map((food) => ({
+        const response = h.response([
+                    food.map((food) => ({
                     id: food.id,
                     name: food.name,
                     description: food.description,
                     url_image: food.url_image,
                     url_product: food.url_product,
-                })),
-        });
+                }))
+            ]);
 
         response.code(200);
         return response;
     }
 
-    const response = h.response({
-            foods: foodTemp.slice(0, 5).map((food) => ({
+    const response = h.response(
+                foodTemp.slice(0, 5).map((food) => ({
                 id: food.id,
                 name: food.name,
                 description: food.description,
                 url_image: food.url_image,
                 url_product: food.url_product,
-            })),
-    });
+            }))
+        );
 
     response.code(200);
     return response;
@@ -267,29 +267,29 @@ const get5BatikMethodHandler = (request, h) => {
             batik.name.toLowerCase().includes(name.toLowerCase())
         );
 
-        const response = h.response({
-                batiks: batik.map((batik) => ({
+        const response = h.response([
+                    batik.map((batik) => ({
                     id: batik.id,
                     name: batik.name,
                     description: batik.description,
                     url_image: batik.url_image,
                     url_product: batik.url_product,
-                })),
-        });
+                }))
+            ]);
 
         response.code(200);
         return response;
     }
 
-    const response = h.response({
-            batiks: batikTemp.slice(0, 5).map((batik) => ({
+    const response = h.response(
+                batikTemp.slice(0, 5).map((batik) => ({
                 id: batik.id,
                 name: batik.name,
                 description: batik.description,
                 url_image: batik.url_image,
                 url_product: batik.url_product,
             })),
-    });
+    );
 
     response.code(200);
     return response;
@@ -364,29 +364,29 @@ const get5BuildMethodHandler = (request, h) => {
             build.name.toLowerCase().includes(name.toLowerCase())
         );
 
-        const response = h.response({
-                builds: build.map((build) => ({
+        const response = h.response([
+                    build.map((build) => ({
                     id: build.id,
                     name: build.name,
                     description: build.description,
                     url_image: build.url_image,
                     url_product: build.url_product,
-                })),
-        });
+                }))
+            ]);
 
         response.code(200);
         return response;
     }
 
-    const response = h.response({
-            builds: buildTemp.slice(0, 5).map((build) => ({
+    const response = h.response(
+                buildTemp.slice(0, 5).map((build) => ({
                 id: build.id,
                 name: build.name,
                 description: build.description,
                 url_image: build.url_image,
                 url_product: build.url_product,
             })),
-    });
+    );
 
     response.code(200);
     return response;
@@ -435,9 +435,7 @@ const getSearchAllData =(request, h) => {
     }
 
     if (hasil.length > 0) {
-        return {
-            'data': hasil
-        }
+        return hasil
     };
     
     const response = h.response({
