@@ -132,8 +132,6 @@ const getFoodMethodHandler = (request, h) => {
     );
 
     const response = h.response({
-        status: 'success',
-        data: {
         foods: food.map((food) => ({
             id: food.id,
             name: food.name,
@@ -141,7 +139,6 @@ const getFoodMethodHandler = (request, h) => {
             url_image: food.url_image,
             url_product: food.url_product,
         })),
-        },
     });
     
     response.code(200);
@@ -149,8 +146,6 @@ const getFoodMethodHandler = (request, h) => {
     }
 
     const response = h.response({
-        status: 'success',
-        data: {
         foods: foodTemp.map((food) => ({
             id: food.id,
             name: food.name,
@@ -158,9 +153,8 @@ const getFoodMethodHandler = (request, h) => {
             url_image: food.url_image,
             url_product: food.url_product,
         })),
-    },
     });
-    console.log(foods);
+
     response.code(200);
     return response;
 };
@@ -170,14 +164,15 @@ const getFoodsDetailMethodHandler = (request, h) => {
 const { name } = request.params;
 
     const food = foods.filter((foodTemp) => foodTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
-    if (food !== undefined) {
+    const hasil1 = []
+    if (food) {
+        hasil1.push(food);
+    }
+    if (hasil1.length > 0) {
         return {
-        status: 'success',
-        data: {
-        food,
-        },
+            'data': hasil1
+        }
     };
-}
     const response = h.response({
         status: 'fail',
         message: 'data tidak ditemukan',
@@ -197,8 +192,6 @@ const get5FoodMethodHandler = (request, h) => {
         );
 
         const response = h.response({
-            status: 'success',
-            data: {
                 foods: food.map((food) => ({
                     id: food.id,
                     name: food.name,
@@ -206,7 +199,6 @@ const get5FoodMethodHandler = (request, h) => {
                     url_image: food.url_image,
                     url_product: food.url_product,
                 })),
-            },
         });
 
         response.code(200);
@@ -214,8 +206,6 @@ const get5FoodMethodHandler = (request, h) => {
     }
 
     const response = h.response({
-        status: 'success',
-        data: {
             foods: foodTemp.slice(0, 5).map((food) => ({
                 id: food.id,
                 name: food.name,
@@ -223,7 +213,6 @@ const get5FoodMethodHandler = (request, h) => {
                 url_image: food.url_image,
                 url_product: food.url_product,
             })),
-        },
     });
 
     response.code(200);
@@ -241,8 +230,6 @@ const getBatikMethodHandler = (request, h) => {
     );
 
     const response = h.response({
-        status: 'success',
-        data: {
         foods: batik.map((batik) => ({
             id: batik.id,
             name: batik.name,
@@ -250,7 +237,6 @@ const getBatikMethodHandler = (request, h) => {
             url_image: batik.url_image,
             url_product: batik.url_product,
             })),
-        },
     });
 
     response.code(200);
@@ -258,8 +244,6 @@ const getBatikMethodHandler = (request, h) => {
     }
 
     const response = h.response({
-        status: 'success',
-        data: {
         foods: batikTemp.map((batik) => ({
             id: batik.id,
             name: batik.name,
@@ -267,11 +251,12 @@ const getBatikMethodHandler = (request, h) => {
             url_image: batik.url_image,
             url_product: batik.url_product,
         })),
-    },
     });
+
     response.code(200);
     return response;
 };
+
 // GET 5 Data Pertama Food
 const get5BatikMethodHandler = (request, h) => {
     const batikTemp = Array.isArray(batiks) ? batiks : []; // Ensure foodTemp is an array
@@ -283,8 +268,6 @@ const get5BatikMethodHandler = (request, h) => {
         );
 
         const response = h.response({
-            status: 'success',
-            data: {
                 batiks: batik.map((batik) => ({
                     id: batik.id,
                     name: batik.name,
@@ -292,7 +275,6 @@ const get5BatikMethodHandler = (request, h) => {
                     url_image: batik.url_image,
                     url_product: batik.url_product,
                 })),
-            },
         });
 
         response.code(200);
@@ -300,8 +282,6 @@ const get5BatikMethodHandler = (request, h) => {
     }
 
     const response = h.response({
-        status: 'success',
-        data: {
             batiks: batikTemp.slice(0, 5).map((batik) => ({
                 id: batik.id,
                 name: batik.name,
@@ -309,7 +289,6 @@ const get5BatikMethodHandler = (request, h) => {
                 url_image: batik.url_image,
                 url_product: batik.url_product,
             })),
-        },
     });
 
     response.code(200);
@@ -321,14 +300,15 @@ const getBatiksDetailMethodHandler = (request, h) => {
 const { name } = request.params;
 
     const batik = batiks.filter((batikTemp) => batikTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
-    if (batik !== undefined) {
+    const hasil2 = []
+    if (batik) {
+        hasil2.push(batik);
+    }
+    if (hasil2.length > 0) {
         return {
-        status: 'success',
-        data: {
-        batik,
-        },
+            'data': hasil2
+        }
     };
-}
     const response = h.response({
         status: 'fail',
         message: 'data tidak ditemukan',
@@ -348,8 +328,6 @@ const getBuildMethodHandler = (request, h) => {
     );
 
     const response = h.response({
-        status: 'success',
-        data: {
         builds: build.map((build) => ({
             id: build.id,
             name: build.name,
@@ -357,7 +335,6 @@ const getBuildMethodHandler = (request, h) => {
             url_image: build.url_image,
             url_product: build.url_product,
             })),
-        },
     });
 
     response.code(200);
@@ -365,8 +342,6 @@ const getBuildMethodHandler = (request, h) => {
     }
 
     const response = h.response({
-        status: 'success',
-        data: {
         builds: buildTemp.map((build) => ({
             id: build.id,
             name: build.name,
@@ -374,8 +349,8 @@ const getBuildMethodHandler = (request, h) => {
             url_image: build.url_image,
             url_product: build.url_product,
         })),
-    },
     });
+    
     response.code(200);
     return response;
 };
@@ -390,8 +365,6 @@ const get5BuildMethodHandler = (request, h) => {
         );
 
         const response = h.response({
-            status: 'success',
-            data: {
                 builds: build.map((build) => ({
                     id: build.id,
                     name: build.name,
@@ -399,7 +372,6 @@ const get5BuildMethodHandler = (request, h) => {
                     url_image: build.url_image,
                     url_product: build.url_product,
                 })),
-            },
         });
 
         response.code(200);
@@ -407,8 +379,6 @@ const get5BuildMethodHandler = (request, h) => {
     }
 
     const response = h.response({
-        status: 'success',
-        data: {
             builds: buildTemp.slice(0, 5).map((build) => ({
                 id: build.id,
                 name: build.name,
@@ -416,7 +386,6 @@ const get5BuildMethodHandler = (request, h) => {
                 url_image: build.url_image,
                 url_product: build.url_product,
             })),
-        },
     });
 
     response.code(200);
@@ -428,14 +397,16 @@ const getBuildsDetailMethodHandler = (request, h) => {
 const { name } = request.params;
 
     const build = builds.filter((buildTemp) => buildTemp.name.toLowerCase().replace(/ /g, "") === name.toLowerCase().replace(/ /g, ""))[0];
-    if (build !== undefined) {
+    const hasil3 = []
+    if (build) {
+        hasil3.push(build);
+    }
+    if (hasil3.length > 0) {
         return {
-        status: 'success',
-        data: {
-        build,
-        },
+            'data': hasil3
+        }
     };
-}
+
     const response = h.response({
         status: 'fail',
         message: 'data tidak ditemukan',
