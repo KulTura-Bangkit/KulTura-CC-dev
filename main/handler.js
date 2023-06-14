@@ -465,12 +465,9 @@ const getSearchAllData =(request, h) => {
 
     if (hasil.length > 0) {
         return {
-            status: 'success',
-            data: {
-            hasil,
-        },
-        };
-    }
+            'data': hasil
+        }
+    };
     
     const response = h.response({
         status: 'fail',
